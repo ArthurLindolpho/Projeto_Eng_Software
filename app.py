@@ -33,27 +33,55 @@ class Database:
         self.usuarios = [
             {
                 "idUsu": 1,
+                "nome": "Natalie Olifiers",
+                "email": "natalie@exemplo.com",
+                "senha": "Natalie Olifiers",
+                "funcao": self.funcoes[0]
+            },
+            {
+                "idUsu": 2,
+                "nome": "Franciele Candito",
+                "email": "franciele@exemplo.com",
+                "senha": "Franciele Candito",
+                "funcao": self.funcoes[0]
+            },
+            {
+                "idUsu": 3,
+                "nome": "Dantielly Costa",
+                "email": "dantielly@exemplo.com",
+                "senha": "Dantielly Costa",
+                "funcao": self.funcoes[1]
+            },
+            {
+                "idUsu": 4,
+                "nome": "Maisa Panzani",
+                "email": "maisa@exemplo.com",
+                "senha": "Maisa Panzani",
+                "funcao": self.funcoes[2]
+            },
+            {
+                "idUsu": 5,
                 "nome": "Usuário A",
                 "email": "usu.a@exemplo.com",
                 "senha": "Usuário A",
                 "funcao": self.funcoes[0]
             },
             {
-                "idUsu": 2,
+                "idUsu": 6,
                 "nome": "Usuário B",
                 "email": "usu.b@exemplo.com",
                 "senha": "Usuário B",
                 "funcao": self.funcoes[3]
             },
             {
-                "idUsu": 3,
+                "idUsu": 7,
                 "nome": "Usuário C",
                 "email": "usu.c@exemplo.com",
                 "senha": "Usuário C",
                 "funcao": self.funcoes[2]
             }
         ]
-        self.usuario_counter = 4
+        self.usuario_counter = 8
         
         # Inicializar requisições
         self.requisicoes = [
@@ -61,6 +89,7 @@ class Database:
                 "idReq": 1,
                 "nome": "Usuário F",
                 "email": "usu.f@exemplo.com",
+                "senha": "Usuário F",
                 "justificativa": "Preciso de acesso ao sistema para realizar pesquisas sobre ectoparasitos.",
                 "data": "12/03/2025"
             },
@@ -68,6 +97,7 @@ class Database:
                 "idReq": 2,
                 "nome": "Usuário G",
                 "email": "usu.g@exemplo.com",
+                "senha": "Usuário G",
                 "justificativa": "Sou veterinário e preciso cadastrar dados das visitas aos cães domésticos.",
                 "data": "02/02/2025"
             },
@@ -75,6 +105,7 @@ class Database:
                 "idReq": 3,
                 "nome": "Usuário H",
                 "email": "usu.h@exemplo.com",
+                "senha": "Usuário H",
                 "justificativa": "Necessito acessar o sistema para análises sorológicas dos cães.",
                 "data": "01/12/2024"
             }
@@ -187,6 +218,7 @@ def requisicao_acesso():
             "idReq": db.requisicao_counter,
             "nome": dados['nome'],
             "email": dados['email'],
+            "senha": dados['senha'],  # Armazenar senha escolhida
             "justificativa": dados['justificativa'],
             "data": datetime.now().strftime("%d/%m/%Y")
         }
@@ -379,7 +411,7 @@ def aceitar_requisicao(id_req):
         "idUsu": db.usuario_counter,
         "nome": requisicao['nome'],
         "email": requisicao['email'],
-        "senha": requisicao['nome'],
+        "senha": requisicao.get('senha', requisicao['nome']),  # Usar senha da requisição ou nome como fallback
         "funcao": funcao
     }
     
