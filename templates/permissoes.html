@@ -10,15 +10,16 @@
     <div class="container">
         <div class="sidebar">
             <div class="user-info">
-                <h3>Usuário A</h3>
+                <h3 id="usuarioNome">Carregando...</h3>
                 <p>Meus Envios</p>
-                <p>Não-Finalizados <span class="badge">1</span></p>
+                <p>Não-Finalizados <span class="badge" id="badgeRequisicoes">0</span></p>
             </div>
             
             <div class="menu">
                 <h4>MENU</h4>
                 <a href="/permissoes" class="menu-item active">Gerenciar Permissões</a>
                 <a href="#" class="menu-item">Configurações</a>
+                <a href="/logout" class="menu-item">Sair</a>
                 
                 <h4 class="menu-section">Cães Domésticos</h4>
                 <a href="#" class="menu-item submenu">Tutores</a>
@@ -42,7 +43,7 @@
             
             <div class="tabs">
                 <button class="tab-button active" onclick="openTab('usuarios')">Usuários</button>
-                <button class="tab-button" onclick="openTab('requisicoes')">Requisições <span class="badge">3</span></button>
+                <button class="tab-button" onclick="openTab('requisicoes')">Requisições <span class="badge" id="badgeTabRequisicoes">0</span></button>
             </div>
             
             <!-- Tab Usuários -->
@@ -155,3 +156,4 @@
     <script src="{{ url_for('static', filename='js/permissoes.js') }}"></script>
 </body>
 </html>
+

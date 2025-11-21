@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask_cors import CORS
 from datetime import datetime
 import re
+from functools import wraps
 
 app = Flask(__name__)
+app.secret_key = 'chave-secreta-sistema-monitoramento-caes-2025'
 CORS(app)
 
 # Armazenamento em memória
@@ -119,26 +121,122 @@ def email_existe(email, excluir_id=None):
             return True
     return False
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'usuario_id' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 # Rotas principais
 @app.route('/')
+def home():
+    if 'usuario_id' in session:
+        return redirect(url_for('index'))
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        dados = request.json
+        email = dados.get('email')
+        senha = dados.get('senha')
+        
+        # Buscar usuário
+        usuario = next((u for u in db.usuarios if u['email'] == email), None)
+        
+        if usuario and usuario['senha'] == senha:
+            session['usuario_id'] = usuario['idUsu']
+            session['usuario_nome'] = usuario['nome']
+            session['usuario_email'] = usuario['email']
+            session['usuario_funcao'] = usuario['funcao']['nome']
+            return jsonify({"sucesso": True, "mensagem": "Login realizado com sucesso"})
+        else:
+            return jsonify({"sucesso": False, "erro": "Email ou senha incorretos"}), 401
+    
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+@app.route('/requisicao-acesso', methods=['GET', 'POST'])
+def requisicao_acesso():
+    if request.method == 'POST':
+        dados = request.json
+        
+        # Validações
+        if not dados.get('nome') or not dados.get('email') or not dados.get('senha') or not dados.get('justificativa'):
+            return jsonify({"erro": "Todos os campos são obrigatórios"}), 400
+        
+        if not validar_email(dados['email']):
+            return jsonify({"erro": "Email inválido"}), 400
+        
+        # Verificar se email já existe
+        if email_existe(dados['email']):
+            return jsonify({"erro": "Email já cadastrado no sistema"}), 400
+        
+        # Verificar se já existe requisição com esse email
+        if any(r['email'] == dados['email'] for r in db.requisicoes):
+            return jsonify({"erro": "Já existe uma requisição pendente com este email"}), 400
+        
+        # Criar requisição
+        nova_requisicao = {
+            "idReq": db.requisicao_counter,
+            "nome": dados['nome'],
+            "email": dados['email'],
+            "justificativa": dados['justificativa'],
+            "data": datetime.now().strftime("%d/%m/%Y")
+        }
+        
+        db.requisicoes.append(nova_requisicao)
+        db.requisicao_counter += 1
+        
+        return jsonify({"mensagem": "Requisição enviada com sucesso"}), 201
+    
+    return render_template('requisicao.html')
+
+@app.route('/index')
+@login_required
 def index():
     return render_template('index.html')
 
 @app.route('/permissoes')
+@login_required
 def permissoes():
     return render_template('permissoes.html')
 
 @app.route('/caes')
+@login_required
 def caes():
     return render_template('caes.html')
 
+@app.route('/api/sessao', methods=['GET'])
+@login_required
+def get_sessao():
+    return jsonify({
+        "usuario_id": session.get('usuario_id'),
+        "usuario_nome": session.get('usuario_nome'),
+        "usuario_email": session.get('usuario_email'),
+        "usuario_funcao": session.get('usuario_funcao')
+    })
+
+@app.route('/api/requisicoes/count', methods=['GET'])
+@login_required
+def count_requisicoes():
+    return jsonify({"count": len(db.requisicoes)})
+
 # API - Funções
 @app.route('/api/funcoes', methods=['GET'])
+@login_required
 def get_funcoes():
     return jsonify(db.funcoes)
 
 # API - Usuários
 @app.route('/api/usuarios', methods=['GET'])
+@login_required
 def get_usuarios():
     tipo = request.args.get('tipo', '')
     termo = request.args.get('termo', '')
@@ -156,6 +254,7 @@ def get_usuarios():
     return jsonify(usuarios_filtrados)
 
 @app.route('/api/usuarios', methods=['POST'])
+@login_required
 def adicionar_usuario():
     dados = request.json
     
@@ -189,6 +288,7 @@ def adicionar_usuario():
     return jsonify(novo_usuario), 201
 
 @app.route('/api/usuarios/<int:id_usu>', methods=['PUT'])
+@login_required
 def editar_usuario(id_usu):
     dados = request.json
     
@@ -220,7 +320,11 @@ def editar_usuario(id_usu):
     return jsonify(usuario)
 
 @app.route('/api/usuarios/<int:id_usu>', methods=['DELETE'])
+@login_required
 def remover_usuario(id_usu):
+    if session.get('usuario_id') == id_usu:
+        return jsonify({"erro": "Você não pode excluir seu próprio usuário"}), 403
+    
     usuario = next((u for u in db.usuarios if u['idUsu'] == id_usu), None)
     if not usuario:
         return jsonify({"erro": "Usuário não encontrado"}), 404
@@ -229,6 +333,7 @@ def remover_usuario(id_usu):
     return jsonify({"mensagem": "Usuário removido com sucesso"})
 
 @app.route('/api/usuarios/<int:id_usu>/recuperar-senha', methods=['POST'])
+@login_required
 def recuperar_senha(id_usu):
     usuario = next((u for u in db.usuarios if u['idUsu'] == id_usu), None)
     if not usuario:
@@ -239,6 +344,7 @@ def recuperar_senha(id_usu):
 
 # API - Requisições
 @app.route('/api/requisicoes', methods=['GET'])
+@login_required
 def get_requisicoes():
     tipo = request.args.get('tipo', '')
     termo = request.args.get('termo', '')
@@ -254,6 +360,7 @@ def get_requisicoes():
     return jsonify(requisicoes_filtradas)
 
 @app.route('/api/requisicoes/<int:id_req>/aceitar', methods=['POST'])
+@login_required
 def aceitar_requisicao(id_req):
     dados = request.json
     
@@ -285,6 +392,7 @@ def aceitar_requisicao(id_req):
     return jsonify(novo_usuario), 201
 
 @app.route('/api/requisicoes/<int:id_req>/recusar', methods=['POST'])
+@login_required
 def recusar_requisicao(id_req):
     requisicao = next((r for r in db.requisicoes if r['idReq'] == id_req), None)
     if not requisicao:
@@ -295,6 +403,7 @@ def recusar_requisicao(id_req):
 
 # API - Cães
 @app.route('/api/caes', methods=['GET'])
+@login_required
 def get_caes():
     tipo = request.args.get('tipo', '')
     termo = request.args.get('termo', '')
@@ -312,6 +421,7 @@ def get_caes():
     return jsonify(caes_filtrados)
 
 @app.route('/api/caes', methods=['POST'])
+@login_required
 def adicionar_cao():
     dados = request.json
     
@@ -334,6 +444,7 @@ def adicionar_cao():
     return jsonify(novo_cao), 201
 
 @app.route('/api/caes/<id_cao>', methods=['PUT'])
+@login_required
 def editar_cao(id_cao):
     dados = request.json
     
@@ -355,6 +466,7 @@ def editar_cao(id_cao):
     return jsonify(cao)
 
 @app.route('/api/caes/<id_cao>', methods=['DELETE'])
+@login_required
 def remover_cao(id_cao):
     cao = next((c for c in db.caes if c['idCao'] == id_cao), None)
     if not cao:

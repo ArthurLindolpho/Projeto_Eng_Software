@@ -1,614 +1,712 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Added login page styles */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+}
+
+.login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.login-box h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+.login-box .form-group {
+  margin-bottom: 20px;
+}
+
+.login-box .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.login-box .form-group input,
+.login-box .form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.login-box .form-group input:focus,
+.login-box .form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.btn-login:hover {
+  background: #5568d3;
+}
+
+.login-links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-links a {
+  display: block;
+  color: #667eea;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 8px 0;
+  transition: color 0.3s;
+}
+
+.login-links a:hover {
+  color: #5568d3;
+  text-decoration: underline;
 }
 
 .container {
-    display: flex;
-    min-height: 100vh;
+  display: flex;
+  min-height: 100vh;
 }
 
 /* Sidebar */
 .sidebar {
-    width: 280px;
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px;
-    overflow-y: auto;
+  width: 280px;
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  overflow-y: auto;
 }
 
 .user-info {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #34495e;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #34495e;
 }
 
 .user-info h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .user-info p {
-    font-size: 14px;
-    color: #bdc3c7;
-    margin: 5px 0;
+  font-size: 14px;
+  color: #bdc3c7;
+  margin: 5px 0;
 }
 
 .badge {
-    background-color: #e74c3c;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 12px;
-    margin-left: 5px;
+  background-color: #e74c3c;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-left: 5px;
 }
 
 .menu h4 {
-    font-size: 12px;
-    color: #95a5a6;
-    text-transform: uppercase;
-    margin: 20px 0 10px 0;
-    letter-spacing: 1px;
+  font-size: 12px;
+  color: #95a5a6;
+  text-transform: uppercase;
+  margin: 20px 0 10px 0;
+  letter-spacing: 1px;
 }
 
 .menu-section {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .menu-item {
-    display: block;
-    padding: 12px 15px;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin: 5px 0;
-    transition: background-color 0.3s;
+  display: block;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 5px 0;
+  transition: background-color 0.3s;
 }
 
 .menu-item:hover {
-    background-color: #34495e;
+  background-color: #34495e;
 }
 
 .menu-item.active {
-    background-color: #3498db;
+  background-color: #3498db;
 }
 
 .menu-item.submenu {
-    padding-left: 30px;
-    font-size: 14px;
+  padding-left: 30px;
+  font-size: 14px;
 }
 
 /* Main Content */
 .main-content {
-    flex: 1;
-    padding: 30px;
-    overflow-y: auto;
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
 }
 
 .content-header {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .content-header h1 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #2c3e50;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
 }
 
 /* Welcome Section */
 .welcome-section {
-    background: white;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-section h2 {
-    color: #2c3e50;
-    margin-bottom: 15px;
+  color: #2c3e50;
+  margin-bottom: 15px;
 }
 
 .welcome-section p {
-    color: #7f8c8d;
-    font-size: 16px;
-    margin-bottom: 30px;
+  color: #7f8c8d;
+  font-size: 16px;
+  margin-bottom: 30px;
 }
 
 .quick-access h3 {
-    color: #2c3e50;
-    margin: 30px 0 20px 0;
+  color: #2c3e50;
+  margin: 30px 0 20px 0;
 }
 
 .quick-buttons {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .quick-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 30px;
-    background: #ecf0f1;
-    border-radius: 8px;
-    text-decoration: none;
-    color: #2c3e50;
-    transition: all 0.3s;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 30px;
+  background: #ecf0f1;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #2c3e50;
+  transition: all 0.3s;
 }
 
 .quick-btn:hover {
-    background: #3498db;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background: #3498db;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .quick-btn .icon {
-    font-size: 48px;
+  font-size: 48px;
 }
 
 /* Tabs */
 .tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ecf0f1;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ecf0f1;
 }
 
 .tab-button {
-    padding: 12px 24px;
-    background: none;
-    border: none;
-    color: #7f8c8d;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    transition: all 0.3s;
-    position: relative;
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  color: #7f8c8d;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s;
+  position: relative;
 }
 
 .tab-button:hover {
-    color: #2c3e50;
+  color: #2c3e50;
 }
 
 .tab-button.active {
-    color: #3498db;
+  color: #3498db;
 }
 
 .tab-button.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #3498db;
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #3498db;
 }
 
 .tab-content {
-    display: none;
+  display: none;
 }
 
 .tab-content.active {
-    display: block;
+  display: block;
 }
 
 /* Filter Section */
 .filter-section {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .filter-section label {
-    font-weight: 500;
-    color: #2c3e50;
+  font-weight: 500;
+  color: #2c3e50;
 }
 
 .filter-section select,
 .filter-section input[type="text"] {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 .filter-section select {
-    min-width: 150px;
+  min-width: 150px;
 }
 
 .filter-section input[type="text"] {
-    flex: 1;
+  flex: 1;
 }
 
 .filter-section button {
-    padding: 10px 20px;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background 0.3s;
+  padding: 10px 20px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s;
 }
 
 .filter-section button:hover {
-    background: #2980b9;
+  background: #2980b9;
 }
 
 /* Add Section */
 .add-section {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .add-section h3 {
-    color: #2c3e50;
-    margin-bottom: 15px;
+  color: #2c3e50;
+  margin-bottom: 15px;
 }
 
 .add-form {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .add-form input,
 .add-form select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  flex: 1;
 }
 
 .add-form button {
-    padding: 10px 30px;
-    background: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background 0.3s;
+  padding: 10px 30px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s;
 }
 
 .add-form button:hover {
-    background: #229954;
+  background: #229954;
 }
 
 /* Action Buttons */
 .action-buttons {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .btn-primary {
-    padding: 12px 24px;
-    background: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background 0.3s;
+  padding: 12px 24px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s;
 }
 
 .btn-primary:hover {
-    background: #229954;
+  background: #229954;
 }
 
 /* Table */
 .data-table {
-    width: 100%;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .data-table thead {
-    background: #ecf0f1;
+  background: #ecf0f1;
 }
 
 .data-table th {
-    padding: 15px;
-    text-align: left;
-    font-weight: 600;
-    color: #2c3e50;
-    font-size: 14px;
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 14px;
 }
 
 .data-table td {
-    padding: 15px;
-    border-top: 1px solid #ecf0f1;
-    color: #555;
-    font-size: 14px;
+  padding: 15px;
+  border-top: 1px solid #ecf0f1;
+  color: #555;
+  font-size: 14px;
 }
 
 .data-table tbody tr:hover {
-    background: #f8f9fa;
+  background: #f8f9fa;
 }
 
 /* Action Buttons in Table */
 .action-btn {
-    padding: 6px 12px;
-    margin: 0 3px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    transition: all 0.3s;
+  padding: 6px 12px;
+  margin: 0 3px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .action-btn.edit {
-    background: #3498db;
-    color: white;
+  background: #3498db;
+  color: white;
 }
 
 .action-btn.edit:hover {
-    background: #2980b9;
+  background: #2980b9;
 }
 
 .action-btn.delete {
-    background: #e74c3c;
-    color: white;
+  background: #e74c3c;
+  color: white;
 }
 
-.action-btn.delete:hover {
-    background: #c0392b;
+.action-btn.delete:hover:not(:disabled) {
+  background: #c0392b;
 }
 
 .action-btn.recover {
-    background: #f39c12;
-    color: white;
+  background: #f39c12;
+  color: white;
 }
 
 .action-btn.recover:hover {
-    background: #e67e22;
+  background: #e67e22;
 }
 
 .action-btn.expand {
-    background: #9b59b6;
-    color: white;
+  background: #9b59b6;
+  color: white;
 }
 
 .action-btn.expand:hover {
-    background: #8e44ad;
+  background: #8e44ad;
 }
 
 .action-btn.accept {
-    background: #27ae60;
-    color: white;
+  background: #27ae60;
+  color: white;
 }
 
 .action-btn.accept:hover {
-    background: #229954;
+  background: #229954;
 }
 
 .action-btn.reject {
-    background: #e74c3c;
-    color: white;
+  background: #e74c3c;
+  color: white;
 }
 
 .action-btn.reject:hover {
-    background: #c0392b;
+  background: #c0392b;
 }
 
 /* Modal */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background-color: white;
+  margin: 5% auto;
+  padding: 30px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
-    color: #000;
+  color: #000;
 }
 
 .modal-content h2 {
-    color: #2c3e50;
-    margin-bottom: 20px;
+  color: #2c3e50;
+  margin-bottom: 20px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #2c3e50;
-    font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-weight: 500;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 .form-group textarea {
-    resize: vertical;
-    min-height: 100px;
+  resize: vertical;
+  min-height: 100px;
 }
 
 .form-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .form-actions button {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
 }
 
 .form-actions button[type="button"]:first-child {
-    background: #27ae60;
-    color: white;
+  background: #27ae60;
+  color: white;
 }
 
 .form-actions button[type="button"]:first-child:hover {
-    background: #229954;
+  background: #229954;
 }
 
 .form-actions button[type="button"]:last-child {
-    background: #95a5a6;
-    color: white;
+  background: #95a5a6;
+  color: white;
 }
 
 .form-actions button[type="button"]:last-child:hover {
-    background: #7f8c8d;
+  background: #7f8c8d;
 }
 
 /* Detalhes Requisição */
 .detalhes-campo {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .detalhes-campo label {
-    display: block;
-    color: #7f8c8d;
-    font-size: 12px;
-    margin-bottom: 5px;
+  display: block;
+  color: #7f8c8d;
+  font-size: 12px;
+  margin-bottom: 5px;
 }
 
 .detalhes-campo p {
-    color: #2c3e50;
-    font-size: 16px;
+  color: #2c3e50;
+  font-size: 16px;
 }
 
 .modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 30px;
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
 }
 
 .modal-actions select {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 .modal-actions button {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
 }
 
 .modal-actions button.accept {
-    background: #27ae60;
-    color: white;
+  background: #27ae60;
+  color: white;
 }
 
 .modal-actions button.accept:hover {
-    background: #229954;
+  background: #229954;
 }
 
 .modal-actions button.reject {
-    background: #e74c3c;
-    color: white;
+  background: #e74c3c;
+  color: white;
 }
 
 .modal-actions button.reject:hover {
-    background: #c0392b;
+  background: #c0392b;
 }
 
 /* Messages */
 .message {
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-weight: 500;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
 .message.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
 }
 
 .message.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    
-    .sidebar {
-        width: 100%;
-    }
-    
-    .filter-section,
-    .add-form {
-        flex-direction: column;
-    }
-    
-    .quick-buttons {
-        flex-direction: column;
-    }
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .filter-section,
+  .add-form {
+    flex-direction: column;
+  }
+
+  .quick-buttons {
+    flex-direction: column;
+  }
 }
