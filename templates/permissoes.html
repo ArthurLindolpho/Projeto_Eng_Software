@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Permissões - Sistema de Monitoramento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="user-info">
+                <h3>Usuário A</h3>
+                <p>Meus Envios</p>
+                <p>Não-Finalizados <span class="badge">1</span></p>
+            </div>
+            
+            <div class="menu">
+                <h4>MENU</h4>
+                <a href="/permissoes" class="menu-item active">Gerenciar Permissões</a>
+                <a href="#" class="menu-item">Configurações</a>
+                
+                <h4 class="menu-section">Cães Domésticos</h4>
+                <a href="#" class="menu-item submenu">Tutores</a>
+                <a href="/caes" class="menu-item submenu">Cães</a>
+                <a href="#" class="menu-item submenu">Entrevistas</a>
+                <a href="#" class="menu-item submenu">Rastreio de GPS</a>
+                <a href="#" class="menu-item submenu">Visitas do Veterinário</a>
+                <a href="#" class="menu-item submenu">Exames e Análises</a>
+                
+                <h4 class="menu-section">Atropelamentos</h4>
+                <a href="#" class="menu-item submenu">Animais Atropelados</a>
+                <a href="#" class="menu-item submenu">Necrópsias</a>
+                <a href="#" class="menu-item submenu">Resultados e Análises</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="content-header">
+                <h1>PERMISSÕES</h1>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab('usuarios')">Usuários</button>
+                <button class="tab-button" onclick="openTab('requisicoes')">Requisições <span class="badge">3</span></button>
+            </div>
+            
+            <!-- Tab Usuários -->
+            <div id="usuarios" class="tab-content active">
+                <div class="filter-section">
+                    <label>Filtrar:</label>
+                    <select id="filtroTipoUsuario">
+                        <option value="nome">Nome</option>
+                        <option value="email">E-mail</option>
+                        <option value="funcao">Função</option>
+                    </select>
+                    <input type="text" id="filtroTermoUsuario" placeholder="Termo do filtro...">
+                    <button onclick="filtrarUsuarios()">Filtrar</button>
+                    <button onclick="limparFiltroUsuarios()">Limpar</button>
+                </div>
+                
+                <div class="add-section">
+                    <h3>Adicionar novo usuário</h3>
+                    <div class="add-form">
+                        <input type="text" id="novoNome" placeholder="Nome">
+                        <input type="email" id="novoEmail" placeholder="E-mail">
+                        <select id="novaFuncao">
+                            <option value="">Selecione a função</option>
+                        </select>
+                        <button onclick="adicionarUsuario()">Adicionar</button>
+                    </div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Função</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaUsuarios">
+                        <!-- Preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Tab Requisições -->
+            <div id="requisicoes" class="tab-content">
+                <div class="filter-section">
+                    <label>Filtrar por nome ou e-mail:</label>
+                    <input type="text" id="filtroTermoRequisicao" placeholder="Digite aqui...">
+                    <button onclick="filtrarRequisicoes()">Filtrar</button>
+                    <button onclick="limparFiltroRequisicoes()">Limpar</button>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaRequisicoes">
+                        <!-- Preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Editar Usuário -->
+    <div id="modalEditarUsuario" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalEditar()">&times;</span>
+            <h2>Editar Usuário</h2>
+            <form id="formEditarUsuario">
+                <input type="hidden" id="editarIdUsu">
+                <div class="form-group">
+                    <label>Nome:</label>
+                    <input type="text" id="editarNome" required>
+                </div>
+                <div class="form-group">
+                    <label>E-mail:</label>
+                    <input type="email" id="editarEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Função:</label>
+                    <select id="editarFuncao" required>
+                        <option value="">Selecione a função</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="salvarEdicaoUsuario()">Salvar</button>
+                    <button type="button" onclick="fecharModalEditar()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Expandir Requisição -->
+    <div id="modalExpandirRequisicao" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalRequisicao()">&times;</span>
+            <h2>INFORMAÇÕES DA REQUISIÇÃO</h2>
+            <div id="detalhesRequisicao">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/permissoes.js') }}"></script>
+</body>
+</html>

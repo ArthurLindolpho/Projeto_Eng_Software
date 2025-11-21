@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Monitoramento - Menu Principal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="user-info">
+                <h3>Usuário A</h3>
+                <p>Meus Envios</p>
+                <p>Não-Finalizados <span class="badge">1</span></p>
+            </div>
+            
+            <div class="menu">
+                <h4>MENU</h4>
+                <a href="/permissoes" class="menu-item">Gerenciar Permissões</a>
+                <a href="#" class="menu-item">Configurações</a>
+                
+                <h4 class="menu-section">Cães Domésticos</h4>
+                <a href="#" class="menu-item submenu">Tutores</a>
+                <a href="/caes" class="menu-item submenu">Cães</a>
+                <a href="#" class="menu-item submenu">Entrevistas</a>
+                <a href="#" class="menu-item submenu">Rastreio de GPS</a>
+                <a href="#" class="menu-item submenu">Visitas do Veterinário</a>
+                <a href="#" class="menu-item submenu">Exames e Análises</a>
+                
+                <h4 class="menu-section">Atropelamentos</h4>
+                <a href="#" class="menu-item submenu">Animais Atropelados</a>
+                <a href="#" class="menu-item submenu">Necrópsias</a>
+                <a href="#" class="menu-item submenu">Resultados e Análises</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="content-header">
+                <h1>MENU PRINCIPAL</h1>
+            </div>
+            
+            <div class="welcome-section">
+                <h2>Sistema de Monitoramento de Cães Domésticos</h2>
+                <p>Bem-vindo ao sistema de monitoramento. Selecione uma opção no menu lateral para começar.</p>
+                
+                <div class="quick-access">
+                    <h3>Acesso Rápido</h3>
+                    <div class="quick-buttons">
+                        <a href="/permissoes" class="quick-btn">
+                            <span class="icon">👥</span>
+                            <span>Gerenciar Permissões</span>
+                        </a>
+                        <a href="/caes" class="quick-btn">
+                            <span class="icon">🐕</span>
+                            <span>Cães Domésticos</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
