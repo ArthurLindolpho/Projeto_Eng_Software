@@ -79,6 +79,13 @@ class Database:
                 "email": "usu.c@exemplo.com",
                 "senha": "Usuário C",
                 "funcao": self.funcoes[2]
+            },
+            {
+                "idUsu": 7,
+                "nome": "Arthur",
+                "email": "arthur@gmail.com",
+                "senha": "123456",
+                "funcao": self.funcoes[2]
             }
         ]
         self.usuario_counter = 8
