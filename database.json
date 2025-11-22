@@ -1,0 +1,116 @@
+{
+  "usuarios": [
+    {
+      "idUsu": 8,
+      "nome": "Arthur",
+      "email": "arthur@gmail.com",
+      "senha": "Arthur",
+      "funcao": {
+        "idFuncao": 1,
+        "nome": "Administrador",
+        "descricao": "Acesso total ao sistema"
+      }
+    },
+    {
+      "idUsu": 9,
+      "nome": "Nicolas",
+      "email": "nicolas@gmail.com",
+      "senha": "123456",
+      "funcao": {
+        "idFuncao": 3,
+        "nome": "Veterinário",
+        "descricao": "Registra visitas veterinárias"
+      }
+    },
+    {
+      "idUsu": 10,
+      "nome": "Matheus",
+      "email": "matheus@gmail.com",
+      "senha": "Matheus",
+      "funcao": {
+        "idFuncao": 2,
+        "nome": "Entrevistador",
+        "descricao": "Realiza entrevistas"
+      }
+    }
+  ],
+  "requisicoes": [
+    {
+      "idReq": 2,
+      "nome": "Usuário G",
+      "email": "usu.g@exemplo.com",
+      "senha": "Usuário G",
+      "justificativa": "Sou veterinário e preciso cadastrar dados das visitas aos cães domésticos.",
+      "data": "02/02/2025"
+    },
+    {
+      "idReq": 3,
+      "nome": "Usuário H",
+      "email": "usu.h@exemplo.com",
+      "senha": "Usuário H",
+      "justificativa": "Necessito acessar o sistema para análises sorológicas dos cães.",
+      "data": "01/12/2024"
+    }
+  ],
+  "funcoes": [
+    {
+      "idFuncao": 1,
+      "nome": "Administrador",
+      "descricao": "Acesso total ao sistema"
+    },
+    {
+      "idFuncao": 2,
+      "nome": "Entrevistador",
+      "descricao": "Realiza entrevistas"
+    },
+    {
+      "idFuncao": 3,
+      "nome": "Veterinário",
+      "descricao": "Registra visitas veterinárias"
+    },
+    {
+      "idFuncao": 4,
+      "nome": "Legista",
+      "descricao": "Registra necropsias"
+    },
+    {
+      "idFuncao": 5,
+      "nome": "Pesquisador Sorológico",
+      "descricao": "Análises sorológicas"
+    }
+  ],
+  "caes": [
+    {
+      "idCao": "cao-001",
+      "nome": "Rex",
+      "dataNasc": "15/03/2020",
+      "sexo": "Masculino",
+      "status": "Ativo"
+    },
+    {
+      "idCao": "cao-002",
+      "nome": "Bella",
+      "dataNasc": "22/07/2019",
+      "sexo": "Feminino",
+      "status": "Ativo"
+    },
+    {
+      "idCao": "cao-003",
+      "nome": "Max",
+      "dataNasc": "10/01/2021",
+      "sexo": "Masculino",
+      "status": "Inativo"
+    },
+    {
+      "idCao": "cao-004",
+      "nome": "rex",
+      "dataNasc": "12/04/2015",
+      "sexo": "Masculino",
+      "status": "Ativo"
+    }
+  ],
+  "usuario_counter": 11,
+  "requisicao_counter": 5,
+  "cao_counter": 5,
+  "ultima_atualizacao": "22/11/2025 17:16:29"
+}
