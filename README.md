@@ -1,125 +1,211 @@
 # Sistema de Monitoramento de Cães Domésticos
 
-Sistema web para gerenciamento de dados de monitoramento de cães domésticos e fauna selvagem.
+Sistema web para gerenciamento de dados de monitoramento de cães domésticos e fauna selvagem, desenvolvido para pesquisadores envolvidos no projeto de análise da relação entre cães domésticos e animais selvagens.
+
+## Características
+
+- **Autenticação e Autorização**: Sistema de login com diferentes níveis de acesso
+- **Gerenciamento de Permissões**: Controle de usuários e requisições de acesso
+- **Cadastro de Cães Domésticos**: Registro e acompanhamento de cães monitorados
+- **Persistência de Dados**: Todos os dados são salvos automaticamente em arquivo JSON
 
 ## Funcionalidades Implementadas
 
-### 1. Gerenciar Permissões (CDU 2.3.2 - Administrador)
-- **Gerenciar Usuários**: Visualizar, adicionar, editar e remover usuários do sistema
-- **Recuperar Senha**: Resetar senha de usuários para o valor padrão (nome do usuário)
-- **Gerenciar Requisições**: Visualizar, aceitar ou recusar requisições de acesso ao sistema
-- **Filtros**: Buscar usuários e requisições por nome, email ou função
+### 1. Login e Requisição de Acesso
+- Tela de login com validação de credenciais
+- Página de requisição de acesso para novos usuários
+- Recuperação de senha (reseta para o nome do usuário)
 
-### 2. Cadastrar Cães Domésticos (CDU 2.3.6)
-- **Visualizar Cães**: Listar todos os cães cadastrados com suas informações
-- **Adicionar Cão**: Cadastrar novos cães no sistema
-- **Editar Cão**: Atualizar informações de cães já cadastrados
-- **Remover Cão**: Excluir cães do sistema
-- **Filtros**: Buscar cães por nome, código ou status
+### 2. Gerenciar Permissões (CDU 2.3.2 - Administrador)
+
+**Usuários:**
+- Visualizar todos os usuários cadastrados
+- Filtrar por nome, email ou função
+- Adicionar novo usuário (senha inicial = nome completo)
+- Editar informações de usuário
+- Remover usuário (não permite remover a si mesmo)
+- Recuperar senha de usuário
+
+**Requisições:**
+- Visualizar requisições pendentes
+- Filtrar por nome ou email
+- Expandir para ver justificativa completa
+- Aceitar requisição (cria usuário com a senha escolhida)
+- Recusar requisição
+- Contador de requisições pendentes atualiza automaticamente
+
+### 3. Cadastrar Cães Domésticos (CDU 2.3.6)
+- Visualizar lista de cães cadastrados
+- Filtrar por nome, código ou status
+- Adicionar novo cão (código gerado automaticamente)
+- Editar informações do cão
+- Remover cão
+- Campos: Nome, Data de Nascimento, Sexo (Masculino/Feminino), Status (Ativo/Inativo)
 
 ## Tecnologias Utilizadas
 
-- **Backend**: Python 3.x + Flask
+- **Backend**: Python 3.x com Flask
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Armazenamento**: Em memória (dados de teste incluídos)
-- **API**: REST API com JSON
+- **Persistência**: Arquivo JSON (database.json)
+- **Autenticação**: Flask Sessions
 
 ## Estrutura do Projeto
 
 \`\`\`
 .
-├── app.py                      # Servidor Flask e API REST
-├── templates/
-│   ├── index.html             # Página principal (menu)
-│   ├── permissoes.html        # Gerenciamento de permissões
-│   └── caes.html              # Cadastro de cães domésticos
-├── static/
-│   ├── css/
-│   │   └── style.css          # Estilos globais
-│   └── js/
-│       ├── permissoes.js      # Lógica da página de permissões
-│       └── caes.js            # Lógica da página de cães
-├── requirements.txt            # Dependências Python
-└── README.md                  # Este arquivo
+├── app.py                  # Aplicação Flask principal
+├── persistence.py          # Módulo de persistência de dados
+├── models.py              # Classes de domínio (referência)
+├── controllers.py         # Controladores (referência)
+├── catalogs.py           # Catálogos (referência)
+├── validations.py        # Validações (referência)
+├── database.json         # Arquivo de dados persistidos (gerado automaticamente)
+├── requirements.txt      # Dependências do projeto
+├── templates/            # Templates HTML
+│   ├── index.html
+│   ├── login.html
+│   ├── requisicao.html
+│   ├── permissoes.html
+│   └── caes.html
+└── static/              # Arquivos estáticos
+    ├── css/
+    │   └── style.css
+    └── js/
+        ├── permissoes.js
+        └── caes.js
 \`\`\`
 
 ## Instalação
 
-1. **Clone o repositório ou extraia os arquivos**
+1. **Clone o repositório** (ou extraia o arquivo ZIP):
+\`\`\`bash
+cd sistema-monitoramento-caes
+\`\`\`
 
-2. **Instale as dependências:**
+2. **Instale as dependências**:
 \`\`\`bash
 pip install -r requirements.txt
 \`\`\`
 
-## Executar o Sistema
-
-1. **Inicie o servidor Flask:**
+3. **Execute o servidor**:
 \`\`\`bash
 python app.py
 \`\`\`
 
-2. **Acesse no navegador:**
+4. **Acesse no navegador**:
 \`\`\`
 http://localhost:5000
 \`\`\`
 
-## Dados de Teste
+## Persistência de Dados
 
-O sistema vem pré-configurado com dados de teste:
+O sistema agora utiliza um arquivo `database.json` para persistir todos os dados entre reinicializações do servidor.
 
-### Usuários
-- **Usuário A** (usu.a@exemplo.com) - Administrador
-- **Usuário B** (usu.b@exemplo.com) - Legista
-- **Usuário C** (usu.c@exemplo.com) - Veterinário
+### Como Funciona
 
-### Requisições
-- **Usuário F** - Pesquisador de ectoparasitos
-- **Usuário G** - Veterinário
-- **Usuário H** - Pesquisador sorológico
+- **Carregamento Automático**: Ao iniciar o servidor, o sistema tenta carregar dados do arquivo `database.json`
+- **Salvamento Automático**: Toda operação que modifica dados (adicionar, editar, remover) salva automaticamente no arquivo
+- **Primeira Execução**: Se o arquivo não existir, o sistema cria dados padrão e salva automaticamente
 
-### Cães
-- **Rex** (cao-001) - Masculino, Ativo
-- **Bella** (cao-002) - Feminino, Ativo
-- **Max** (cao-003) - Masculino, Inativo
+### Gerenciamento de Dados
+
+**Resetar para dados padrão** (remove dados personalizados):
+\`\`\`bash
+# Simplesmente delete o arquivo database.json e reinicie o servidor
+rm database.json
+python app.py
+\`\`\`
+
+**Fazer backup dos dados**:
+\`\`\`bash
+# Copie o arquivo database.json para um local seguro
+cp database.json backup_database_$(date +%Y%m%d).json
+\`\`\`
+
+**Restaurar backup**:
+\`\`\`bash
+# Substitua o database.json pelo arquivo de backup
+cp backup_database_YYYYMMDD.json database.json
+\`\`\`
+
+## Credenciais de Acesso Padrão
+
+### Administradores
+- Email: `natalie@exemplo.com` | Senha: `Natalie Olifiers`
+- Email: `franciele@exemplo.com` | Senha: `Franciele Candito`
+- Email: `usu.a@exemplo.com` | Senha: `Usuário A`
+
+### Outros Usuários
+- **Entrevistador**: `dantielly@exemplo.com` | Senha: `Dantielly Costa`
+- **Veterinário**: `maisa@exemplo.com` | Senha: `Maisa Panzani`
+- **Legista**: `usu.b@exemplo.com` | Senha: `Usuário B`
+- **Veterinário**: `usu.c@exemplo.com` | Senha: `Usuário C`
 
 ## Validações Implementadas
 
-### Usuários
-- ✅ Email em formato válido
-- ✅ Verificação de duplicidade de email
-- ✅ Todos os campos obrigatórios
-- ✅ Senha inicial = nome do usuário
+### Email
+- ✅ Formato válido de email
+- ✅ Verificação de duplicidade no sistema
+- ✅ Não permite emails já cadastrados ou em requisições pendentes
 
-### Cães
-- ✅ Todos os campos obrigatórios
-- ✅ Data de nascimento no formato DD/MM/AAAA
-- ✅ Sexo: Masculino ou Feminino
-- ✅ Status: Ativo ou Inativo
-- ✅ Código gerado automaticamente (formato: cao-XXX)
+### Campos Obrigatórios
+- ✅ Todos os campos de formulários são validados
+- ✅ Mensagens de erro descritivas para o usuário
+
+### Segurança
+- ✅ Usuário não pode excluir a si mesmo
+- ✅ Rotas protegidas por autenticação (decorator @login_required)
+- ✅ Sessões seguras com chave secreta
 
 ## API Endpoints
 
-### Funções
-- `GET /api/funcoes` - Lista todas as funções disponíveis
+### Autenticação
+- `POST /login` - Realizar login
+- `GET /logout` - Realizar logout
+- `POST /requisicao-acesso` - Enviar requisição de acesso
 
 ### Usuários
-- `GET /api/usuarios` - Lista usuários (com filtros opcionais)
-- `POST /api/usuarios` - Adiciona novo usuário
-- `PUT /api/usuarios/<id>` - Atualiza usuário existente
-- `DELETE /api/usuarios/<id>` - Remove usuário
-- `POST /api/usuarios/<id>/recuperar-senha` - Recupera senha do usuário
+- `GET /api/usuarios` - Listar usuários (com filtros opcionais)
+- `POST /api/usuarios` - Adicionar novo usuário
+- `PUT /api/usuarios/<id>` - Editar usuário
+- `DELETE /api/usuarios/<id>` - Remover usuário
+- `POST /api/usuarios/<id>/recuperar-senha` - Recuperar senha
 
 ### Requisições
-- `GET /api/requisicoes` - Lista requisições (com filtros opcionais)
-- `POST /api/requisicoes/<id>/aceitar` - Aceita requisição e cria usuário
-- `POST /api/requisicoes/<id>/recusar` - Recusa e remove requisição
+- `GET /api/requisicoes` - Listar requisições (com filtros opcionais)
+- `GET /api/requisicoes/count` - Contar requisições pendentes
+- `POST /api/requisicoes/<id>/aceitar` - Aceitar requisição
+- `POST /api/requisicoes/<id>/recusar` - Recusar requisição
 
 ### Cães
-- `GET /api/caes` - Lista cães (com filtros opcionais)
-- `POST /api/caes` - Adiciona novo cão
-- `PUT /api/caes/<id>` - Atualiza cão existente
-- `DELETE /api/caes/<id>` - Remove cão
+- `GET /api/caes` - Listar cães (com filtros opcionais)
+- `POST /api/caes` - Adicionar novo cão
+- `PUT /api/caes/<id>` - Editar cão
+- `DELETE /api/caes/<id>` - Remover cão
+
+### Funções
+- `GET /api/funcoes` - Listar funções disponíveis
+
+### Sessão
+- `GET /api/sessao` - Obter dados do usuário logado
+
+### Administração
+- `POST /api/admin/salvar-dados` - Salvar dados manualmente
+- `POST /api/admin/resetar-dados` - Resetar para dados padrão
+
+## Níveis de Usuário
+
+1. **Administrador** - Acesso total ao sistema
+2. **Entrevistador** - Realiza entrevistas e cadastra tutores e cães
+3. **Veterinário** - Registra visitas veterinárias
+4. **Pesquisador Fezes** - Cadastra análises de fezes
+5. **Pesquisador Vírus** - Registra resultados de exames de vírus
+6. **Pesquisador Imunopatologia** - Registra resultados de imunopatologia
+7. **Pesquisador Tripasomatídeos** - Registra resultados de tripasomatídeos
+8. **Pesquisador Sorológico** - Registra análises sorológicas
+9. **Pesquisador Ectoparasitos** - Cadastra análises de ectoparasitos
+10. **Legista** - Registra atropelamentos e necrópsias
+11. **Pesquisador Helmintos** - Cadastra análises de helmintos
 
 ## Interface do Usuário
 
@@ -134,33 +220,41 @@ O sistema vem pré-configurado com dados de teste:
 ### Navegação
 - **Menu lateral**: Acesso rápido a todas as funcionalidades
 - **Abas**: Organização de conteúdo relacionado (Usuários/Requisições)
-- **Breadcrumbs**: Indicação da página atual
 - **Ações rápidas**: Botões de ação próximos aos dados
 
-## Funções do Sistema
+## Solução de Problemas
 
-O sistema possui as seguintes funções/cargos disponíveis:
-1. Administrador
-2. Entrevistador
-3. Veterinário
-4. Legista
-5. Pesquisador Sorológico
+**Problema: Os dados desaparecem ao reiniciar o servidor**
+- Solução: Verifique se o arquivo `database.json` está sendo criado no mesmo diretório do `app.py`
+- Verifique as permissões de escrita no diretório
 
-## Observações
+**Problema: Não consigo fazer login**
+- Verifique se está usando as credenciais corretas (email e senha exatos)
+- Tente resetar os dados deletando o `database.json` e reiniciando o servidor
 
-- Os dados são armazenados em memória e serão perdidos ao reiniciar o servidor
-- Para uso em produção, considere implementar persistência em banco de dados
-- As interfaces foram desenvolvidas seguindo fielmente os designs fornecidos na documentação
-- Seguindo rigorosamente os diagramas de classes de projeto e diagramas de comunicação
+**Problema: Erro ao salvar dados**
+- Verifique as permissões de escrita no diretório
+- Verifique se há espaço em disco disponível
 
-## Próximos Passos
+**Problema: Contador de requisições não atualiza**
+- Isso foi corrigido! O contador agora atualiza automaticamente após aceitar/recusar requisições
 
-Para expandir o sistema, considere implementar:
-- Autenticação e login de usuários
-- Persistência de dados em banco de dados (PostgreSQL, MySQL, etc.)
-- Cadastro de tutores
-- Sistema de entrevistas
-- Rastreamento GPS
-- Visitas veterinárias
-- Exames e análises
-- Registro de atropelamentos e necrópsias
+## Desenvolvimento
+
+O sistema foi desenvolvido seguindo os diagramas de casos de uso, classes e comunicação fornecidos na documentação do projeto.
+
+### Casos de Uso Implementados
+- 2.3.2 - Gerenciar permissões
+- 2.3.6 - Cadastrar cão doméstico
+
+## Equipe
+
+**Grupo 10 (G10):**
+- Arthur Tavares
+- Mateus Arthur
+- Nícolas Ouverney
+
+**Coordenadores do Projeto:**
+- Dra. Natalie Olifiers
+- Mestra Franciele Candito
+

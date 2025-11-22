@@ -3,6 +3,7 @@ from flask_cors import CORS
 from datetime import datetime
 import re
 from functools import wraps
+from persistence import DataPersistence
 
 app = Flask(__name__)
 app.secret_key = 'chave-secreta-sistema-monitoramento-caes-2025'
@@ -79,13 +80,6 @@ class Database:
                 "email": "usu.c@exemplo.com",
                 "senha": "Usuário C",
                 "funcao": self.funcoes[2]
-            },
-            {
-                "idUsu": 7,
-                "nome": "Arthur",
-                "email": "arthur@gmail.com",
-                "senha": "123456",
-                "funcao": self.funcoes[2]
             }
         ]
         self.usuario_counter = 8
@@ -146,7 +140,11 @@ class Database:
         self.cao_counter = 4
 
 db = Database()
-db.init_data()
+
+if not DataPersistence.carregar_dados(db):
+    print("Nenhum arquivo de dados encontrado. Inicializando com dados padrão...")
+    db.init_data()
+    DataPersistence.salvar_dados(db)
 
 # Validações
 def validar_email(email):
@@ -324,6 +322,8 @@ def adicionar_usuario():
     db.usuarios.append(novo_usuario)
     db.usuario_counter += 1
     
+    DataPersistence.salvar_dados(db)
+    
     return jsonify(novo_usuario), 201
 
 @app.route('/api/usuarios/<int:id_usu>', methods=['PUT'])
@@ -356,6 +356,8 @@ def editar_usuario(id_usu):
     usuario['email'] = dados['email']
     usuario['funcao'] = funcao
     
+    DataPersistence.salvar_dados(db)
+    
     return jsonify(usuario)
 
 @app.route('/api/usuarios/<int:id_usu>', methods=['DELETE'])
@@ -369,6 +371,9 @@ def remover_usuario(id_usu):
         return jsonify({"erro": "Usuário não encontrado"}), 404
     
     db.usuarios.remove(usuario)
+    
+    DataPersistence.salvar_dados(db)
+    
     return jsonify({"mensagem": "Usuário removido com sucesso"})
 
 @app.route('/api/usuarios/<int:id_usu>/recuperar-senha', methods=['POST'])
@@ -379,6 +384,9 @@ def recuperar_senha(id_usu):
         return jsonify({"erro": "Usuário não encontrado"}), 404
     
     usuario['senha'] = usuario['nome']  # Resetar senha para o nome
+    
+    DataPersistence.salvar_dados(db)
+    
     return jsonify({"mensagem": "Senha recuperada com sucesso", "nova_senha": usuario['senha']})
 
 # API - Requisições
@@ -428,6 +436,8 @@ def aceitar_requisicao(id_req):
     # Remover requisição
     db.requisicoes.remove(requisicao)
     
+    DataPersistence.salvar_dados(db)
+    
     return jsonify(novo_usuario), 201
 
 @app.route('/api/requisicoes/<int:id_req>/recusar', methods=['POST'])
@@ -438,6 +448,9 @@ def recusar_requisicao(id_req):
         return jsonify({"erro": "Requisição não encontrada"}), 404
     
     db.requisicoes.remove(requisicao)
+    
+    DataPersistence.salvar_dados(db)
+    
     return jsonify({"mensagem": "Requisição recusada com sucesso"})
 
 # API - Cães
@@ -480,6 +493,8 @@ def adicionar_cao():
     db.caes.append(novo_cao)
     db.cao_counter += 1
     
+    DataPersistence.salvar_dados(db)
+    
     return jsonify(novo_cao), 201
 
 @app.route('/api/caes/<id_cao>', methods=['PUT'])
@@ -502,6 +517,8 @@ def editar_cao(id_cao):
     cao['sexo'] = dados['sexo']
     cao['status'] = dados['status']
     
+    DataPersistence.salvar_dados(db)
+    
     return jsonify(cao)
 
 @app.route('/api/caes/<id_cao>', methods=['DELETE'])
@@ -512,7 +529,23 @@ def remover_cao(id_cao):
         return jsonify({"erro": "Cão não encontrado"}), 404
     
     db.caes.remove(cao)
+    
+    DataPersistence.salvar_dados(db)
+    
     return jsonify({"mensagem": "Cão removido com sucesso"})
+
+@app.route('/api/admin/salvar-dados', methods=['POST'])
+@login_required
+def salvar_dados_manual():
+    if DataPersistence.salvar_dados(db):
+        return jsonify({"mensagem": "Dados salvos com sucesso"})
+    return jsonify({"erro": "Erro ao salvar dados"}), 500
+
+@app.route('/api/admin/resetar-dados', methods=['POST'])
+@login_required
+def resetar_dados():
+    DataPersistence.resetar_dados(db)
+    return jsonify({"mensagem": "Dados resetados para valores padrão"})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
